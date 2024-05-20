@@ -1,3 +1,4 @@
+import numpy as np
 from helper_function import load_and_prep_image
 # import matplotlib.pyplot as plt
 from tensorflow.keras.models import load_model
@@ -5,39 +6,43 @@ import csv
 import tensorflow as tf
 import os
 
-# import keras
+print(tf.__version__)
 
-# print(tf.__version__)
-# print("Keras version:", keras.__version__)
+csv_file_path = r"C:\class_names.csv"
+class_names = []
+with open(csv_file_path, mode='r', newline='') as file:
+    reader = csv.reader(file)
+    # Skip the header row
+    next(reader)
+    # Iterate over rows and append class names to the list
+    for row in reader:
+        class_names.append(row[1])
 
-# csv_file_path = r"C:\class_names.csv"
-# class_names = []
-# with open(csv_file_path, mode='r', newline='') as file:
-#     reader = csv.reader(file)
-#     # Skip the header row
-#     next(reader)
-#     # Iterate over rows and append class names to the list
-#     for row in reader:
-#         class_names.append(row[1])
-#
-# print("Loaded classes: ", class_names)
+print("Loaded classes: ", class_names)
 
-# model = load_model("C:\EfficientNetB1 (1).hdf5")
-
+model = load_model("C:\EfficientNetB1 (1).hdf5")
 
 def pred_plot_custom(folder_path):
     custom_food_images = [folder_path + img_path for img_path in os.listdir(folder_path)]
     i = 0
     # fig, a = plt.subplots(len(custom_food_images), 2, figsize=(15, 5 * len(custom_food_images)))
 
+    # Load the TFLite model and allocate tensors.
+    interpreter = tf.lite.Interpreter(model_path="C:\\amodeltflite.tflite")
+    interpreter.allocate_tensors()
+
+    # Get input and output tensors.
+    input_details = interpreter.get_input_details()
+    output_details = interpreter.get_output_details()
+
     for img in custom_food_images:
         print(img)
         img = load_and_prep_image(img, scale=False)
         pred_prob = model.predict(tf.expand_dims(img, axis=0))
         pred_class = class_names[pred_prob.argmax()]
-        top_5_i = (pred_prob.argsort())[0][-5:][::-1]
-        values = pred_prob[0][top_5_i]
-        labels = []
+        # top_5_i = (pred_prob.argsort())[0][-5:][::-1]
+        # values = pred_prob[0][top_5_i]
+        # labels = []
         # for x in range(5):
         #     labels.append(class_names[top_5_i[x]])
 
@@ -51,41 +56,67 @@ def pred_plot_custom(folder_path):
         # Plotting Models Top 5 Predictions
         # a[i][1].bar(labels, values, color='orange');
         # a[i][1].set_title('Top 5 Predictions')
+
+
+        # Add batch dimension and convert to float32
+        img1 = np.expand_dims(img, axis=0).astype(np.float32)
+
+        # Set the tensor to point to the input data
+        interpreter.set_tensor(input_details[0]['index'], img1)
+
+        # Run inference
+        interpreter.invoke()
+
+        # Get the results
+        pred_prob1 = interpreter.get_tensor(output_details[0]['index'])
+        pred_class1 = class_names[pred_prob1.argmax()]
+
+        print(f"tflite Prediction: {pred_class1}")
+
+
+
+
+
+
+
+
         i = i + 1
 
 
-# pred_plot_custom("C:/Images/")
-# convert keras model to tflite
-# def get_file_size(file_path):
-#     size = os.path.getsize(file_path)
-#     return size
-#
-
-# def convert_bytes(size, unit=None):
-#     if unit == "KB":
-#         return print('File size: ' + str(round(size / 1024, 3)) + ' Kilobytes')
-#     elif unit == "MB":
-#         return print('File size: ' + str(round(size / (1024 * 1024), 3)) + ' Megabytes')
-#     else:
-#         return print('File size: ' + str(size) + ' bytes')
-#
+pred_plot_custom("C:/Images/")
 
 import tensorflow as tf
-os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+# model = tf.keras.models.load_model("C:\EfficientNetB1 (1).hdf5")
+# print("Model loaded successfully.")
+# print("Coverting.")
+#
+# converter = tf.lite.TFLiteConverter.from_keras_model(model)
+# converter.target_ops = [tf.lite.OpsSet.TFLITE_BUILTINS]
+# tflite_model = converter.convert()
+#
+# # Save the converted model to a .tflite file
+# with open("efficientnetb1.tflite", "wb") as f:
+#     f.write(tflite_model)
 
-model = tf.keras.models.load_model("C:\EfficientNetB1 (1).hdf5")
-print("Model loaded successfully.")
-print("Coverting.")
+# Define the function to make predictions and plot the results
+def pred_plot_custom_tflite(folder_path):
+    # Load the TFLite model and allocate tensors
+    tflite_model_path = "C:\\amodeltflite.tflite"
+    interpreter = tf.lite.Interpreter(model_path=tflite_model_path)
+    interpreter.allocate_tensors()
 
-converter = tf.lite.TFLiteConverter.from_keras_model(model)
-converter.target_ops = [tf.lite.OpsSet.TFLITE_BUILTINS]
-tflite_model = converter.convert()
+    # Get input and output tensors
+    input_details = interpreter.get_input_details()
+    print("Input")
+    print(input_details)
+    print("OUTPUT")
 
-# Save the converted model to a .tflite file
-with open("efficientnetb1.tflite", "wb") as f:
-    f.write(tflite_model)
+    output_details = interpreter.get_output_details()
+    print(output_details)
 
-print("Done saving tflite")
+
+# pred_plot_custom_tflite("C:\Images\\")
+
 # import os
 # import csv
 # import matplotlib.pyplot as plt
