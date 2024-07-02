@@ -256,7 +256,7 @@ Stuffed Tomatoes,Tomatoes,None,None,"Herbs, breadcrumbs",None,Does not contain
 Biryani,Rice,None,Ghee,"Biryani masala, spices",None,Does not contain
 Chole Bhature,Chickpeas,Sugar,Ghee,"Chole masala, spices",None,Does not contain
 Masala Dosa,Rice,None,Oil,"Potato masala, spices",None,Does not contain
-Samosa,Potatoes,None,Ghee,Spices,None,Contains
+Samosa,Potatoes,None,Ghee,Spices,None,Does not Contains
 Aloo Gobi,Potatoes,None,Oil,"Cauliflower, spices",None,Does not contain
 Chicken Biryani,Chicken,None,Ghee,"Basmati rice, spices",None,Does not contain
 Vada Pav,Potato,None,Oil,"Pav bun, chutney",None,Does not contain

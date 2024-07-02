@@ -49,7 +49,7 @@ class_names = [
 ]
 print("Loaded classes: ", class_names)
 
-model = load_model("EfficientNetB1 (1).hdf5")  #org
+model = load_model("EfficientNetB1 Model.hdf5")  #org
 
 
 # Create a function to import an image and resize it to be able to be used with our model
