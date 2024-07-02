@@ -10,6 +10,7 @@ import os
 import csv
 import pandas as pd
 import numpy as np
+
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -83,7 +84,7 @@ def pred_plot_custom(folder_path):
     tree.insert('', 'end', values=('Fat/Oil', food_data['Fat/Oil']))
     tree.insert('', 'end', values=('Seasoning', food_data['Seasoning']))
     tree.insert('', 'end', values=('Allergens', food_data['Allergens']))
-    tree.insert('', 'end', values=('Prediction', 'Contains' if food_data['Allergens'] else 'Does not contain'))
+    tree.insert('', 'end', values=('Prediction', food_data['Prediction']))
 
 def select_image():
     file_path = filedialog.askopenfilename(

@@ -129,7 +129,4 @@ def pred_plot_custom(folder_path):
         food_data = recognize_allergens(pred_class, food_column='Food Product')
         print(food_data, "\n")
 
-        # i = i + 1
-
-
 pred_plot_custom("C:/Images/")  # Run the model and make allergen predictions on all the images in the folder

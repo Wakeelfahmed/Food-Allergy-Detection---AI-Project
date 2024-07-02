@@ -399,5 +399,5 @@ Zucchini Bread,Zucchini,Sugar,Butter,"Cinnamon, nuts","Wheat, Dairy, Nuts",Conta
 Banana Bread,Bananas,Sugar,Butter,"Cinnamon, nuts","Wheat, Dairy, Nuts",Contains
 Hawaiian Pizza,Pizza dough,None,None,"Pineapple, ham","Wheat, Pork, Dairy",Contains
 Baklawa,Phyllo dough,Honey,Butter,"Walnuts, pistachios, spices","Nuts, Dairy, Wheat",Contains
-Steak,Beef,None,Olive oil,"Salt, Pepper",None,Does Not Contain
+Steak,Beef,None,Olive oil,"Salt, Pepper",None,"Does not contain"
 Cup cakes,Flour,Sugar,Butter,Vanilla,"Wheat, Dairy, Eggs",Contains
