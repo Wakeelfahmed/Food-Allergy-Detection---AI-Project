@@ -1,3 +1,7 @@
+> Dataset: Food 101
+> 
+> Model: EfficientNetB1
+
 ## Allergen Dishes
 
 ![Allergen Dishes](Outputs%20%28Results%29/Allergen%20Dishes.png)
